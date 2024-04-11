@@ -15,11 +15,12 @@ $f3 = Base::instance();
 //Define a default route
 //https://kcheng.greenriverdev.com/328/hello-fat-free/
 $f3->route('GET /', function(){
-    echo '<h1>Hello from My Diner App!</h1>';
+    //echo below is used for testing before executing the template
+//    echo '<h1>Hello from My Diner App!</h1>';
 
 //    //Render a view page
-//    $view = new Template();
-//    echo $view->render('views/home.html');
+    $view = new Template();
+    echo $view->render('views/home-page.html');
 });
 
 //Run Fat-Free

@@ -23,5 +23,32 @@ $f3->route('GET /', function(){
     echo $view->render('views/home-page.html');
 });
 
+//Breakfast Menu
+$f3->route('GET /menus/breakfast', function(){
+//    echo '<h1>My breakfast menus</h1>';
+
+//    //Render a view page
+    $view = new Template();
+    echo $view->render('views/breakfast-menu.html');
+});
+
+//Lunch Menu
+$f3->route('GET /menus/lunch', function(){
+//    echo '<h1>My lunch menus</h1>';
+
+//    //Render a view page
+    $view = new Template();
+    echo $view->render('views/lunch-menu.html');
+});
+
+//Dinner Menu
+$f3->route('GET /menus/dinner', function(){
+//    echo '<h1>My dinner menus</h1>';
+
+//    //Render a view page
+    $view = new Template();
+    echo $view->render('views/dinner-menu.html');
+});
+
 //Run Fat-Free
 $f3->run();

@@ -7,8 +7,17 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-// Require the autoload file
+// Require the necessary file
 require_once ('vendor/autoload.php');
+require_once ('model/data-layer.php');
+require_once ('model/validate.php');
+//var_dump(getMeals());
+
+//Validation 1st step
+//$testFood = 'pho';
+//echo validFood($testFood) ? 'valid': "not valid";
+//var_dump((validFood($testFood)));
+//
 
 // Instantiate the F3 Base class
 $f3 = Base::instance();
@@ -64,31 +73,54 @@ $f3->route('GET /summary', function($f3) {
 $f3->route('GET|POST /order1', function($f3) {
     //echo '<h1>My Breakfast Menu</h1>';
 
+    //Initialize variable
+    $food = "";
+    $meal = "";
+
+
     // If the form has been posted
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         //echo "<p>You got here using the POST method</p>";
         //var_dump ($_POST);
 
-        // Get the data from the post array
-        $food = $_POST['food'];
-        $meal = $_POST['meal'];
 
-        // If the data valid
-        if (true) {
+        //VALIDATION FOR FOOD STARTS HERE ****
+        // Get the data from the post array and pass it through th validFood()
+        // If it returns true, get data out and put into the session food, if not, return error
+//        var_dump($_POST);
+        if(validFood($_POST['food'])){
+            $food = $_POST['food'];
+        }
+        else{
+            $f3->set('errors["food"]', 'Please enter a food');
+        }
 
-            // Add the data to the session array
-            $f3->set('SESSION.food', $food);
-            $f3->set('SESSION.meal', $meal);
+        //VALIDATION FOR MEAL STARTS HERE ****
+        //if Meal is set and pass the validation, add to meal array
+        if (isset($_POST['meal']) and validMeal($_POST)['meal']){
+            $meal = $_POST['meal'];
+        }
+        else{
+            $f3->set('errors["meal"]', 'Please select a meal');
+        }
 
-            // Send the user to the next form
+        // If true, Add the data to the session array
+        $f3->set('SESSION.food', $food);
+        $f3->set('SESSION.meal', $meal);
+
+        //If there is no error, send the user to the next form, if not, stay on the current form
+        if(empty($f3->get('errors'))){
             $f3->reroute('order2');
         }
-        else {
-            // Temporary
-            echo "<p>Validation errors</p>";
-        }
+
     }
+
+    //Get the data from the model
+    //and add it to the F3 hive
+    $meals = getMeals();
+//    var_dump($meals);
+    $f3->set('meals',$meals);
 
     // Render a view page
     $view = new Template();
@@ -124,6 +156,10 @@ $f3->route('GET|POST /order2', function($f3) {
             echo "<p>Validation errors</p>";
         }
     }
+
+    $condiments = getCondiments();
+//    var_dump($meals);
+    $f3->set('condiments',$condiments);
 
     // Render a view page
     $view = new Template();

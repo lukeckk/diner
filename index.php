@@ -98,7 +98,7 @@ $f3->route('GET|POST /order1', function($f3) {
 
         //VALIDATION FOR MEAL STARTS HERE ****
         //if Meal is set and pass the validation, add to meal array
-        if (isset($_POST['meal']) and validMeal($_POST)['meal']){
+        if (isset($_POST['meal']) and validMeal($_POST['meal'])){
             $meal = $_POST['meal'];
         }
         else{

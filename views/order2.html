@@ -13,9 +13,8 @@
             <label class="col-sm-4 control-label">Select your Condiments</label>
 
             <div class="col-sm-4">
-
-                <repeat group="{{ @condiments }}" value="{{ @condiments }}">
-                    <label><input type="radio" name="meal" value="{{ @condiments }}"> {{ ucfirst(@condiments) }}</label><br>
+                <repeat group="{{ @condiments }}" value="{{ @condiment }}">
+                    <label><input type="checkbox" name="conds[]" value="{{ @condiment }}"> {{ ucfirst(@condiment) }}</label><br>
                 </repeat>
             </div>
         </div>

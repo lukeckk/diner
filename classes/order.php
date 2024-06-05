@@ -23,10 +23,12 @@ class Order
     /**
      * @return string|the
      */
-    public function getFood()
+    public function getFood(): string
     {
         return $this->_food;
     }
+
+
 
     /**
      * @param string|the $food
@@ -69,4 +71,6 @@ class Order
     {
         $this->_condiments = $condiments;
     }
+
+
 }
